@@ -48,3 +48,57 @@ WebServer (HTTP on :8080)
 - Docker (Desktop) running
 
 - Maven (optional; IntelliJ can build too)
+
+## 📁 Project Layout
+
+```
+src/main/java/demo/kafka/
+  Bootstrap.java          # starts WebServer + PositionConsumer in same JVM
+  WebServer.java          # HTTP server: /, /positions, /route, /ui, /map
+  PositionConsumer.java   # Kafka consumer -> updates PositionStore
+  PositionProducer.java   # single train along the route
+  MultiTrainProducer.java # (optional) multiple trains in parallel
+  Position.java           # POJO: vehicleId, lat, lon, speedMph, headingDeg, ts
+  PositionStore.java      # ConcurrentHashMap<vehicleId, Position>
+  Route.java              # curated waypoints Houston -> Denton
+pom.xml                   # deps: kafka-clients, jackson, (optional) slf4j-simple
+
+ ```
+
+## ⚙️ Build & Run
+
+- Run Bootstrap (starts web + consumer).
+- Console should show: HTTP server running at http://localhost:8080/ and Subscribed. Polling…
+
+- Run PositionProducer (streams points).
+- You’ll see sent train-001 … logs.
+
+Open:
+
+http://localhost:8080/
+→ links to endpoints
+
+http://localhost:8080/map
+→ live map (smooth + trail)
+
+http://localhost:8080/positions
+→ live JSON
+
+http://localhost:8080/route
+→ planned route (GeoJSON)
+
+## 🧩 Data Model
+
+Position (JSON)
+
+```
+{
+  "vehicleId": "train-001",
+  "lat": 29.7604,
+  "lon": -95.3698,
+  "speedMph": 55.0,
+  "headingDeg": 321.0,
+  "ts": 1737066123456
+}
+```
+
