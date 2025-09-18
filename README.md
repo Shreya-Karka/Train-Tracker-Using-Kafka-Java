@@ -3,8 +3,7 @@
 Real-time simulation of a train traveling from Houston to Denton with positions streamed via Kafka, consumed in Java, and visualized on a Leaflet web map (with smooth animation + trail).
 
 ## Live Map Tracking Train
-[Train-tracking.webm](Files/Train-tracking.webm)
-
+[train-tracking.gif](Files/train-tracking.gif)
 
 ## ✨ Features
 
