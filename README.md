@@ -2,6 +2,10 @@
 
 Real-time simulation of a train traveling from Houston to Denton with positions streamed via Kafka, consumed in Java, and visualized on a Leaflet web map (with smooth animation + trail).
 
+## Live Map Tracking Train
+<video src="Files/Train-tracking.webm" controls width="640"></video>
+
+
 ## ✨ Features
 
 - Producer streams GPS-like points along a curvy, realistic route (Houston → Denton).
@@ -45,9 +49,22 @@ WebServer (HTTP on :8080)
 
 - Java 23 (OpenJDK)
 
-- Docker (Desktop) running
-
+- Docker (Desktop) running Kafka
+```
+# Start Kafka (single node)
+docker run -d --name kafka -p 9092:9092 -p 9093:9093 \
+  -e KAFKA_CFG_NODE_ID=1 \
+  -e KAFKA_CFG_PROCESS_ROLES=broker,controller \
+  -e KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@localhost:9093 \
+  -e KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093 \
+  -e KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092 \
+  -e KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER \
+  -e KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true \
+  bitnami/kafka:latest
+```
 - Maven (optional; IntelliJ can build too)
+
+
 
 ## 📁 Project Layout
 
